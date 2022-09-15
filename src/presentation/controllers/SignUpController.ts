@@ -1,19 +1,14 @@
 import { HttpRequest, HttpResponse } from '../protocols/http'
 import MisssingParamError from '../erros/MissingParamError'
+import { badRequest } from '../helpers/httpHelper'
 class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
     if (!httpRequest.body.name) {
-      return {
-        statusCode: 400,
-        body: new MisssingParamError('name')
-      }
+      return badRequest(new MisssingParamError('name'))
     }
 
     if (!httpRequest.body.email) {
-      return {
-        statusCode: 400,
-        body: new MisssingParamError('email')
-      }
+      return badRequest(new MisssingParamError('email'))
     }
   }
 }
