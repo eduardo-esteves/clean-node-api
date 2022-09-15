@@ -3,12 +3,12 @@ import MisssingParamError from '../erros/MissingParamError'
 import { badRequest } from '../helpers/httpHelper'
 class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
-    if (!httpRequest.body.name) {
-      return badRequest(new MisssingParamError('name'))
-    }
+    const requiredFields = ['name', 'email']
 
-    if (!httpRequest.body.email) {
-      return badRequest(new MisssingParamError('email'))
+    for (const field of requiredFields) {
+      if (!httpRequest.body[field]) {
+        return badRequest(new MisssingParamError(field))
+      }
     }
   }
 }
